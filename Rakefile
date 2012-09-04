@@ -35,7 +35,27 @@ namespace :test do
     end
   end
   task :augeas => ['augeas:syntax', 'augeas:tests']
+
+  namespace :puppet do
+    task :syntax do
+      files = Dir['manifests/**/*.pp']
+      files.each do |file|
+        $stdout.write "Syntax checking #{file}... "
+        $stdout.flush
+        output = `bundle exec puppet parser validate #{file} 2>&1`
+        if $?.success?
+          puts "OK"
+        else
+          puts "failed"
+          puts "---"
+          puts output
+          fail
+        end
+      end
+    end
+  end
+  task :puppet => ['puppet:syntax']
 end
 
-task :test => ['test:augeas']
+task :test => ['test:augeas', 'test:puppet']
 task :default => :test
