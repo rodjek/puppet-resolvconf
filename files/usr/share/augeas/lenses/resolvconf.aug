@@ -11,7 +11,8 @@ module Resolvconf =
     let until_slash_ws_or_eol = /[^\/\n\t ]+/
     let int = /[0-9]+/
 
-    let nameserver = [ key "nameserver" . ws . store until_ws_or_eol . eol ]
+    let nameserver = [ key "nameserver"
+        . ws . store until_ws_or_eol . eol ]
 
     let domain = [ key "domain" . ws . store until_ws_or_eol . eol ]
 
@@ -26,12 +27,12 @@ module Resolvconf =
     let sortlist_list = sortlist_entry . ( ws . sortlist_entry )*
     let sortlist = [ key "sortlist" . ws . sortlist_list . eol ]
 
-    let boolean_option (r:regexp) = [ Util.del_str "options" . ws . key r
+    let boolean_option (r:regexp) = [ key "options" . ws . store r
         . eol ]
     let boolean_options = "debug" | "rotate" | "no-check-names" | "inet6"
         | "ip6-bytestring" | "ip6-dotint" | "no-ip6-dotint" | "edns0"
-    let value_option (r:regexp) = [ Util.del_str "options" . ws . key r
-        . colon . store int . eol ]
+    let value_option (r:regexp) = [ key "options" . ws . store r
+        . [ colon . label "value" . store int . eol ] ]
     let value_options = "ndots" | "timeout" | "attempts"
     let options = (value_option value_options|boolean_option boolean_options)
 

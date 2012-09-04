@@ -38,47 +38,53 @@ module Test_resolvconf =
 
     let debug = "options debug\n"
     test Resolvconf.options get debug =
-        { "debug" }
+        { "options" = "debug" }
 
     let ndots = "options ndots:3\n"
     test Resolvconf.options get ndots =
-        { "ndots" = "3" }
+        { "options" = "ndots"
+            { "value" = "3" }
+        }
 
     let timeout = "options timeout:5\n"
     test Resolvconf.options get timeout =
-        { "timeout" = "5" }
+        { "options" = "timeout"
+            { "value" = "5" }
+        }
 
     let attempts = "options attempts:2\n"
     test Resolvconf.options get attempts =
-        { "attempts" = "2" }
+        { "options" = "attempts"
+            { "value" = "2" }
+        }
 
     let rotate = "options rotate\n"
     test Resolvconf.options get rotate =
-        { "rotate" }
+        { "options" = "rotate" }
 
     let no_check_names = "options no-check-names\n"
     test Resolvconf.options get no_check_names =
-        { "no-check-names" }
+        { "options" = "no-check-names" }
 
     let inet6 = "options inet6\n"
     test Resolvconf.options get inet6 =
-        { "inet6" }
+        { "options" = "inet6" }
 
     let ip6_bytestring = "options ip6-bytestring\n"
     test Resolvconf.options get ip6_bytestring =
-        { "ip6-bytestring" }
+        { "options" = "ip6-bytestring" }
 
     let ip6_dotint = "options ip6-dotint\n"
     test Resolvconf.options get ip6_dotint =
-        { "ip6-dotint" }
+        { "options" = "ip6-dotint" }
 
     let no_ip6_dotint = "options no-ip6-dotint\n"
     test Resolvconf.options get no_ip6_dotint =
-        { "no-ip6-dotint" }
+        { "options" = "no-ip6-dotint" }
 
     let edns0 = "options edns0\n"
     test Resolvconf.options get edns0 =
-        { "edns0" }
+        { "options" = "edns0" }
 
     let whole_file = "# some comment\n"
         . "nameserver 127.0.0.1\n"
@@ -109,5 +115,7 @@ module Test_resolvconf =
             }
         }
         { "domain" = "foo.test.com" }
-        { "debug" }
-        { "timeout" = "1" }
+        { "options" = "debug" }
+        { "options" = "timeout"
+            { "value" = "1" }
+        }
