@@ -1,3 +1,5 @@
+require 'puppet-lint'
+
 namespace :test do
   namespace :augeas do
     task :syntax do
@@ -53,8 +55,18 @@ namespace :test do
         end
       end
     end
+
+    task :lint do
+      linter =  PuppetLint.new
+      Dir.glob('manifests/**/*.pp').each do |puppet_file|
+        puts "Evaluating #{puppet_file}"
+        linter.file = puppet_file
+        linter.run
+      end
+      fail if linter.errors?
+    end
   end
-  task :puppet => ['puppet:syntax']
+  task :puppet => ['puppet:syntax', 'puppet:lint']
 end
 
 task :test => ['test:augeas', 'test:puppet']
