@@ -3,11 +3,11 @@ module Test_resolvconf =
     let multi_nameservers = "nameserver 127.0.0.1\nnameserver 10.0.0.1\n"
 
     test Resolvconf.nameserver get nameserver =
-        { "1" = "127.0.0.1" }
+        { "nameserver" = "127.0.0.1" }
 
     test Resolvconf.lns get multi_nameservers =
-        { "1" = "127.0.0.1" }
-        { "2" = "10.0.0.1" }
+        { "nameserver" = "127.0.0.1" }
+        { "nameserver" = "10.0.0.1" }
 
     let domain = "domain foo.bar.test.com\n"
 
@@ -92,8 +92,8 @@ module Test_resolvconf =
 
     test Resolvconf.lns get whole_file =
         { "#comment" = "some comment" }
-        { "1" = "127.0.0.1" }
-        { "2" = "10.0.0.1" }
+        { "nameserver" = "127.0.0.1" }
+        { "nameserver" = "10.0.0.1" }
         {  }
         { "search"
             { "1" = "foo.test.com" }

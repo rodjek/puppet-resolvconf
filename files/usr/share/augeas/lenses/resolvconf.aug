@@ -11,8 +11,7 @@ module Resolvconf =
     let until_slash_ws_or_eol = /[^\/\n\t ]+/
     let int = /[0-9]+/
 
-    let nameserver = [ Util.del_str "nameserver" . seq "nameserver"
-        . ws . store until_ws_or_eol . eol ]
+    let nameserver = [ key "nameserver" . ws . store until_ws_or_eol . eol ]
 
     let domain = [ key "domain" . ws . store until_ws_or_eol . eol ]
 
