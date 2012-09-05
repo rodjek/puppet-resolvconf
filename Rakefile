@@ -63,7 +63,7 @@ namespace :test do
         linter.file = puppet_file
         linter.run
       end
-      fail if linter.errors?
+      fail if linter.errors? or linter.warnings?
     end
   end
   task :puppet => ['puppet:syntax', 'puppet:lint']
