@@ -87,6 +87,7 @@ module Test_resolvconf =
         { "options" = "edns0" }
 
     let whole_file = "# some comment\n"
+        . "; another way of comments\n"
         . "nameserver 127.0.0.1\n"
         . "nameserver 10.0.0.1\n"
         . "\n"
@@ -98,6 +99,7 @@ module Test_resolvconf =
 
     test Resolvconf.lns get whole_file =
         { "#comment" = "some comment" }
+        { "#comment" = "another way of comments" }
         { "nameserver" = "127.0.0.1" }
         { "nameserver" = "10.0.0.1" }
         {  }
