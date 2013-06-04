@@ -22,11 +22,9 @@
 #     ensure => absent,
 #   }
 define resolvconf::nameserver($priority = 'last() + 1', $ensure = 'present') {
-  include resolvconf::lenses
 
   Augeas {
     context => '/files/etc/resolv.conf',
-    require => Class['resolvconf::lenses'],
   }
 
   case $ensure {

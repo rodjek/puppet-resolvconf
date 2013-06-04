@@ -22,11 +22,9 @@
 #     ensure => 'absent',
 #   }
 define resolvconf::option($value = '', $ensure = 'present') {
-  include resolvconf::lenses
 
   Augeas {
     context => '/files/etc/resolv.conf',
-    require => Class['resolvconf::lenses'],
   }
 
   case $ensure {
