@@ -29,8 +29,8 @@ define resolvconf::search($priority = '999', $ensure = 'present') {
   case $ensure {
     'present': {
       augeas { "Adding search domain '${name}' to /etc/resolv.conf":
-        changes => "set search/domain/[${priority}] '${name}'",
-        onlyif  => "match search/domain/[.='${name}'] size == 0",
+        changes => "set search/domain[${priority}] '${name}'",
+        onlyif  => "match search/domain[${priority}][.='${name}'] size == 0",
       }
     }
     'absent': {
