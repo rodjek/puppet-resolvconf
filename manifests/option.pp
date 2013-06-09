@@ -46,7 +46,7 @@ define resolvconf::option($value = '', $ensure = 'present') {
               onlyif  => "match options[.='${name}'] size == 0";
             "Setting /etc/resolv.conf option '${name}' to '${value}'":
               changes => "set options[.='${name}']/value ${value}",
-              require => Augeas["Adding option '${name} to /etc/resolv.conf"];
+              require => Augeas["Adding option '${name}' to /etc/resolv.conf"];
           }
         }
         default: {
