@@ -19,7 +19,8 @@ define resolvconf::search($priority = '999', $ensure = 'present') {
   include resolvconf::lenses
 
   Augeas {
-    context => '/files/etc/resolv.conf',
+    incl => '/etc/resolv.conf',
+    lens => 'Resolvconf.lns',
     require => Class['resolvconf::lenses'],
   }
 
