@@ -5,7 +5,7 @@
 ```puppet
 # Prefer hitting a local resolver
 resolvconf::nameserver { '127.0.0.1':
-  priority => '0',
+  priority => '1',
 }
 
 # Fallback to the network resolvers
@@ -18,11 +18,11 @@ resolvconf::option { 'timeout':
 
 resolvconf::search {
   'foo.test.com':
-    priority => '0';
-  'bar.test.com':
     priority => '1';
-  'baz.test.com':
+  'bar.test.com':
     priority => '2';
+  'baz.test.com':
+    priority => '3';
   'test.com': ;
 }
 ```

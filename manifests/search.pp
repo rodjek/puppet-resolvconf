@@ -2,7 +2,7 @@
 #
 # namevar  - The search domain name as a String.
 # priority - The optional priority of the search domain as an Integer.  If a
-#            value between 0 and 5 is provided, the entry will be the first
+#            value between 1 and 6 is provided, the entry will be the first
 #            through sixth search domain respectively.
 # ensure   - The desired state of the resource as a String.  Valid values are
 #            'absent' and 'present' (default: 'present').
@@ -11,9 +11,9 @@
 #
 #   resolvconf::search {
 #     'foo.test.com':
-#       priority => 0;
-#     'test.com':
 #       priority => 1;
+#     'test.com':
+#       priority => 2;
 #   }
 define resolvconf::search($priority = '999', $ensure = 'present') {
 
@@ -30,7 +30,7 @@ define resolvconf::search($priority = '999', $ensure = 'present') {
     'present': {
       augeas { "Adding search domain '${name}' to /etc/resolv.conf":
         changes => "set search/domain[${priority}] '${name}'",
-        onlyif  => "match search/domain[${priority}][.='${name}'] size == 0",
+        onlyif  => "match search/domain[${match_priority}][.='${name}'] size == 0",
       }
     }
     'absent': {
