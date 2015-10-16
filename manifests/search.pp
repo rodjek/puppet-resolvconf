@@ -22,15 +22,15 @@ define resolvconf::search($priority = '999', $ensure = 'present') {
   }
 
   $match_priority = $priority ? {
-    '999'   => '*',
-    default => $priority,
+    '999'   => '',
+    default => "[${priority}]",
   }
 
   case $ensure {
     'present': {
       augeas { "Adding search domain '${name}' to /etc/resolv.conf":
         changes => "set search/domain[${priority}] '${name}'",
-        onlyif  => "match search/domain[${match_priority}][.='${name}'] size == 0",
+        onlyif  => "match search/domain${match_priority}[.='${name}'] size == 0",
       }
     }
     'absent': {
