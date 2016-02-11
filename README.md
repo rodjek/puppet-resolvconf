@@ -11,6 +11,12 @@ resolvconf::nameserver { '127.0.0.1':
 # Fallback to the network resolvers
 resolvconf::nameserver { ['10.0.0.1', '10.0.0.2']: }
 
+# Automatically add nameserver after other nameservers in the end of resolv.conf
+# useful in case if some nameservers are already configured by dhclient
+resolvconf::nameserver { '8.8.8.8':
+  priority => 'auto',
+}
+
 # Set the resolve timeout to 1s
 resolvconf::option { 'timeout':
   value => '1',
