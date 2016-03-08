@@ -17,6 +17,14 @@ resolvconf::nameserver { '8.8.8.8':
   priority => 'auto',
 }
 
+# Insert nameserver on the first line of resolv.conf without overriding
+# first configured one.
+# May be used on GCE when installing dnsmasq as resolver/forwarder to add it
+# without losing automatically configured DNS servers
+resolvconf::nameserver { '127.0.0.1':
+  priority => 'first',
+}
+
 # Set the resolve timeout to 1s
 resolvconf::option { 'timeout':
   value => '1',
