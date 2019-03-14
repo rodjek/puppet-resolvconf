@@ -32,10 +32,24 @@ define resolvconf::nameserver($priority = 'last() + 1', $ensure = 'present') {
 
   case $ensure {
     present: {
-
-      augeas { "Adding nameserver ${name} to /etc/resolv.conf":
-        changes => "set nameserver[${priority}] ${name}",
-        onlyif  => "match nameserver[.='${name}'] size == 0",
+      if ($priority == 'first') {
+        augeas { "Inserting nameserver ${name} to /etc/resolv.conf":
+          changes => [
+            "ins nameserver before nameserver[1]",
+            "set nameserver[1] ${name}"
+          ],
+          onlyif  => "match nameserver[.='${name}'] size == 0"
+        }
+      } elsif ($priority == 'auto') {
+        augeas { "Adding nameserver ${name} to /etc/resolv.conf":
+          changes => "set nameserver[.='${name}'] ${name}"
+        }
+      }
+      else {
+        augeas { "Adding nameserver ${name} to /etc/resolv.conf":
+          changes => "set nameserver[${priority}] ${name}",
+          onlyif  => "match nameserver[.='${name}'] size == 0",
+        }
       }
     }
     absent: {
